@@ -32,6 +32,11 @@ public class Account {
 		return incubators.get(id);
 	}
 
+	public void updateIncubator(Incubator incubator) {
+		incubators.put(incubator.getId(), incubator);
+		write();
+	}
+
 	public void write() {
 		Gson gson = Utils.newGson();
 		CompletableFuture<Boolean> future = Utils.writeFileAsync(DayCare.BASE_PATH + "accounts/", owner.toString() +
@@ -48,7 +53,7 @@ public class Account {
 		if (incubators.size() < amount) {
 			int difference = amount - incubators.size();
 			for (int x=0; x < difference; x++) {
-				Incubator newIncubator = new Incubator();
+				Incubator newIncubator = new Incubator(owner);
 				incubators.put(newIncubator.getId(), newIncubator);
 			}
 			write();
@@ -58,7 +63,7 @@ public class Account {
 			ArrayList<UUID> keys = new ArrayList<>(incubators.keySet());
 			int difference = incubators.size() - amount;
 
-			for (UUID id : incubators.keySet()) {
+			for (UUID id : keys) {
 				Incubator incubator = incubators.get(id);
 				if (difference > 0) {
 					if (incubator.getParent2() == null && incubator.getParent1() == null) {

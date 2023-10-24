@@ -6,13 +6,16 @@ import com.google.gson.JsonObject;
 import java.util.UUID;
 
 public class Incubator {
+	private UUID owner;
 	private UUID id;
 	private JsonObject parent1;
 	private JsonObject parent2;
 	private JsonObject baby;
 	private long endTime;
+	private boolean inProgress;
 
-	public Incubator() {
+	public Incubator(UUID owner) {
+		this.owner = owner;
 		id = UUID.randomUUID();
 		reset();
 	}
@@ -31,6 +34,7 @@ public class Incubator {
 
 	public void setParent1(Pokemon parent1) {
 		this.parent1 = parent1.saveToJSON(new JsonObject());
+		update();
 	}
 
 	public Pokemon getParent2() {
@@ -43,6 +47,7 @@ public class Incubator {
 
 	public void setParent2(Pokemon parent2) {
 		this.parent2 = parent2.saveToJSON(new JsonObject());
+		update();
 	}
 
 	public Pokemon getBaby() {
@@ -55,6 +60,7 @@ public class Incubator {
 
 	public void setBaby(Pokemon baby) {
 		this.baby = baby.saveToJSON(new JsonObject());
+		update();
 	}
 
 	public long getEndTime() {
@@ -63,6 +69,16 @@ public class Incubator {
 
 	public void setEndTime(long endTime) {
 		this.endTime = endTime;
+		update();
+	}
+
+	public boolean isInProgress() {
+		return inProgress;
+	}
+
+	public void setInProgress(boolean inProgress) {
+		this.inProgress = inProgress;
+		update();
 	}
 
 	public void reset() {
@@ -70,5 +86,9 @@ public class Incubator {
 		parent2 = null;
 		baby = null;
 		endTime = -1;
+	}
+
+	private void update() {
+		AccountProvider.getAccount(owner).updateIncubator(this);
 	}
 }

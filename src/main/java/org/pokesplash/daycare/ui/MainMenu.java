@@ -1,5 +1,6 @@
 package org.pokesplash.daycare.ui;
 
+import ca.landonjw.gooeylibs2.api.UIManager;
 import ca.landonjw.gooeylibs2.api.button.Button;
 import ca.landonjw.gooeylibs2.api.button.FlagType;
 import ca.landonjw.gooeylibs2.api.button.GooeyButton;
@@ -59,7 +60,7 @@ public class MainMenu {
 							.title("§3§lClick To View Incubator")
 							.lore(lore)
 							.onClick(e -> {
-								// TODO
+								UIManager.openUIForcefully(e.getPlayer(), new IncubatorMenu().getPage(incubator));
 							})
 							.build());
 		}

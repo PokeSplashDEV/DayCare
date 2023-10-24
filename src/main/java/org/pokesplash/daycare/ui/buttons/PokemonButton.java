@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import org.pokesplash.daycare.util.CobblemonUtils;
 import org.pokesplash.daycare.util.Utils;
 
@@ -17,6 +18,15 @@ import java.util.function.Consumer;
 
 public class PokemonButton {
 	public Button getButton(Pokemon pokemon, Consumer<ButtonAction> callback) {
+
+		if (pokemon == null) {
+			return GooeyButton.builder()
+					.display(new ItemStack(Items.NETHER_STAR))
+					.title("§dChoose A Pokemon")
+					.onClick(callback)
+					.build();
+		}
+
 		Collection<String> lore = new ArrayList<>();
 
 		lore.add("§2Nature: §a" + Utils.capitaliseFirst(pokemon.getNature().getName().toString().split(":")[1]));

@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import org.pokesplash.daycare.DayCare;
+import org.pokesplash.daycare.account.Incubator;
 
 public abstract class DayCareUtils {
 	public static boolean isCompatible(Pokemon pokemon1, Pokemon pokemon2) throws IllegalPokemonException {
@@ -74,5 +75,11 @@ public abstract class DayCareUtils {
 		Pokemon baby = new Pokemon();
 		baby.setSpecies(parent1.getSpecies());
 		return baby;
+
+		// TODO all breeding logic.
+	}
+
+	public static void removeBabyFromIncubator(Incubator incubator) {
+		incubator.setBaby(null);
 	}
 }
