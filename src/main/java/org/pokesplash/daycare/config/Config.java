@@ -8,9 +8,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class Config {
 	private boolean allowDittoBreeding;
+	private int incubatorAmount;
+	private int incubationTime;
 
 	public Config() {
 		allowDittoBreeding = true;
+		incubatorAmount = 7;
+		incubationTime = 60;
 	}
 
 	public void init() {
@@ -19,6 +23,8 @@ public class Config {
 					Gson gson = Utils.newGson();
 					Config cfg = gson.fromJson(el, Config.class);
 					allowDittoBreeding = cfg.isAllowDittoBreeding();
+					incubatorAmount = cfg.getIncubatorAmount();
+					incubationTime = cfg.getIncubationTime();
 				});
 
 		if (!futureRead.join()) {
@@ -40,5 +46,13 @@ public class Config {
 
 	public boolean isAllowDittoBreeding() {
 		return allowDittoBreeding;
+	}
+
+	public int getIncubatorAmount() {
+		return incubatorAmount;
+	}
+
+	public int getIncubationTime() {
+		return incubationTime;
 	}
 }
