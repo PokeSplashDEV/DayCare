@@ -69,4 +69,10 @@ public abstract class DayCareUtils {
 			return e.getMessage();
 		}
 	}
+
+	public static Pokemon makeBaby(Pokemon parent1, Pokemon parent2) {
+		Pokemon baby = new Pokemon();
+		baby.setSpecies(parent1.getSpecies());
+		return baby;
+	}
 }
