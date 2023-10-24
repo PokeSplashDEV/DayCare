@@ -24,6 +24,7 @@ public class BaseCommand {
 		LiteralCommandNode<ServerCommandSource> registeredCommand = dispatcher.register(root);
 
 		registeredCommand.addChild(new ReloadCommand().build());
+		registeredCommand.addChild(new DebugCommand().build());
 
 	}
 

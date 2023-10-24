@@ -7,10 +7,10 @@ import org.pokesplash.daycare.util.Utils;
 import java.util.concurrent.CompletableFuture;
 
 public class Config {
-	private boolean isExample;
+	private boolean allowDittoBreeding;
 
 	public Config() {
-		isExample = true;
+		allowDittoBreeding = true;
 	}
 
 	public void init() {
@@ -18,7 +18,7 @@ public class Config {
 				"config.json", el -> {
 					Gson gson = Utils.newGson();
 					Config cfg = gson.fromJson(el, Config.class);
-					isExample = cfg.isExample();
+					allowDittoBreeding = cfg.isAllowDittoBreeding();
 				});
 
 		if (!futureRead.join()) {
@@ -38,7 +38,7 @@ public class Config {
 		DayCare.LOGGER.info(DayCare.MOD_ID + " config file read successfully");
 	}
 
-	public boolean isExample() {
-		return isExample;
+	public boolean isAllowDittoBreeding() {
+		return allowDittoBreeding;
 	}
 }
