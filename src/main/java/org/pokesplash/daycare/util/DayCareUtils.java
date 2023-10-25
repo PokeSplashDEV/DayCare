@@ -1,17 +1,19 @@
 package org.pokesplash.daycare.util;
 
 import com.cobblemon.mod.common.Cobblemon;
-import com.cobblemon.mod.common.api.data.JsonDataRegistry;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.api.pokemon.egg.EggGroup;
 import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import org.pokesplash.daycare.DayCare;
-import org.pokesplash.daycare.account.Incubator;
 
 public abstract class DayCareUtils {
 	public static boolean isCompatible(Pokemon pokemon1, Pokemon pokemon2) throws IllegalPokemonException {
+
+		if (pokemon1 == null || pokemon2 == null) {
+			return false;
+		}
 
 		Species ditto = PokemonSpecies.INSTANCE.getByPokedexNumber(132, Cobblemon.MODID);
 
@@ -77,9 +79,5 @@ public abstract class DayCareUtils {
 		return baby;
 
 		// TODO all breeding logic.
-	}
-
-	public static void removeBabyFromIncubator(Incubator incubator) {
-		incubator.setBaby(null);
 	}
 }

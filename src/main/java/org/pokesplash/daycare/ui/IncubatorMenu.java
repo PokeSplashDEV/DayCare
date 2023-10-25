@@ -8,7 +8,6 @@ import ca.landonjw.gooeylibs2.api.page.GooeyPage;
 import ca.landonjw.gooeylibs2.api.page.Page;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import com.cobblemon.mod.common.Cobblemon;
-import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -16,6 +15,7 @@ import org.pokesplash.daycare.DayCare;
 import org.pokesplash.daycare.account.Incubator;
 import org.pokesplash.daycare.ui.buttons.PokemonButton;
 import org.pokesplash.daycare.util.DayCareUtils;
+import org.pokesplash.daycare.util.IllegalPokemonException;
 import org.pokesplash.daycare.util.Utils;
 
 import java.util.ArrayList;
@@ -44,10 +44,12 @@ public class IncubatorMenu {
 				.display(new ItemStack(Items.GREEN_STAINED_GLASS_PANE))
 				.title("§aConfirm")
 				.onClick(e -> {
+					if (incubator.getBaby() == null) {
+						incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2()));
+						incubator.setEndTime(new Date().getTime() +
+								((long) DayCare.config.getIncubationTime() * 60 * 1000));
+					}
 					incubator.setInProgress(true);
-					incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2()));
-					incubator.setEndTime(new Date().getTime() +
-							((long) DayCare.config.getIncubationTime() * 60 * 1000));
 					UIManager.openUIForcefully(e.getPlayer(), new IncubatorMenu().getPage(incubator));
 				})
 				.build();
@@ -64,9 +66,17 @@ public class IncubatorMenu {
 				})
 				.build();
 
+		String requiredString = "";
+		boolean compatible = false;
+		try {
+			compatible = DayCareUtils.isCompatible(incubator.getParent1(), incubator.getParent2());
+		} catch (IllegalPokemonException e) {
+			requiredString = e.getMessage();
+		}
+
 		Button required = GooeyButton.builder()
 				.display(new ItemStack(Items.ORANGE_STAINED_GLASS_PANE))
-				.title("§6Please select two Pokemon to breed.")
+				.title("§6" + requiredString)
 				.build();
 
 		Button back = GooeyButton.builder()
@@ -93,7 +103,8 @@ public class IncubatorMenu {
 
 		if (incubator.isInProgress()) {
 			template.set(16, cancel);
-		} else if (incubator.getParent1() == null || incubator.getParent2() == null) {
+		} else if (incubator.getParent1() == null || incubator.getParent2() == null
+		|| !compatible) {
 			template.set(16, required);
 		} else {
 			template.set(16, confirm);
@@ -107,14 +118,14 @@ public class IncubatorMenu {
 	}
 
 	private Button makeBabyButton(Incubator incubator) {
-		if (incubator.getParent1() == null || incubator.getParent2() == null || incubator.getBaby() == null) {
+		if (incubator.getBaby() == null) {
 
 			return GooeyButton.builder()
 					.display(new ItemStack(Items.BARRIER))
 					.title("§cNo Egg Available")
 					.build();
 
-		} else if (incubator.isInProgress()) {
+		} else if (incubator.getEndTime() > new Date().getTime()) {
 			return GooeyButton.builder()
 					.display(new ItemStack(Items.EGG))
 					.title("§6Time Until Completion: " +
@@ -135,6 +146,7 @@ public class IncubatorMenu {
 							incubator.setBaby(null);
 							incubator.setEndTime(-1);
 						}
+						UIManager.openUIForcefully(e.getPlayer(), new IncubatorMenu().getPage(incubator));
 					})
 					.build();
 		}
