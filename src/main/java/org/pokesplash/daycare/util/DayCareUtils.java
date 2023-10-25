@@ -97,9 +97,20 @@ public abstract class DayCareUtils {
 				PokemonProperties.Companion.parse(getForm(parent1, parent2, baby), " ", "=");
 		properties.apply(baby);
 
+		// TODO Pokeball
 
 
+		// TODO Moves
 
+		// TODO Abilities
+
+		// TODO Nature
+
+		// TODO IVs
+
+
+		// TODO Shinies? Future?
+		// TODO command to set shiny charm?
 
 
 

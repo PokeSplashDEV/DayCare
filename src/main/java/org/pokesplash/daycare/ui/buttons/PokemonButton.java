@@ -29,6 +29,7 @@ public class PokemonButton {
 
 		Collection<String> lore = new ArrayList<>();
 
+		lore.add("§2Form: §a" + pokemon.getForm().getName());
 		lore.add("§2Nature: §a" + Utils.capitaliseFirst(pokemon.getNature().getName().toString().split(":")[1]));
 
 		if (CobblemonUtils.isHA(pokemon)) {
@@ -37,6 +38,7 @@ public class PokemonButton {
 			lore.add("§2Ability: §a" + Utils.capitaliseFirst(pokemon.getAbility().getName()));
 		}
 		lore.add("§2Gender: §a" + Utils.capitaliseFirst(pokemon.getGender().toString()));
+		lore.add("§2Ball: §a" + Utils.capitaliseFirst(pokemon.getCaughtBall().getName().toString().split(":")[1]));
 		lore.add("§7Stats:");
 		lore.add("§dHP §8- §3IV: §a" + pokemon.getIvs().get(Stats.HP));
 		lore.add("§cAtk §8- §3IV: §a" + pokemon.getIvs().get(Stats.ATTACK));
