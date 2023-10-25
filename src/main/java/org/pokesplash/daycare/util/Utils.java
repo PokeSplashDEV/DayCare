@@ -17,6 +17,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -301,5 +303,9 @@ public abstract class Utils {
 		tag.putString("id", id);
 		tag.putInt("Count", 1);
 		return ItemStack.fromNbt(tag);
+	}
+	public static <T> T getRandomValue(List<T> list) {
+		Random random = new Random();
+		return list.get(random.nextInt(list.size()));
 	}
 }

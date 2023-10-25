@@ -96,12 +96,12 @@ public class SelectMenu {
 	}
 
 	private void changePokemon(Pokemon oldPokemon, Pokemon newPokemon, PlayerPartyStore party) {
-		if (oldPokemon != null) {
-			party.add(oldPokemon);
-		}
-
 		if (newPokemon != null) {
 			party.remove(newPokemon);
+		}
+
+		if (oldPokemon != null) {
+			party.add(oldPokemon);
 		}
 	}
 }
