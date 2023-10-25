@@ -33,7 +33,7 @@ public class Incubator {
 	}
 
 	public void setParent1(Pokemon parent1) {
-		this.parent1 = parent1.saveToJSON(new JsonObject());
+		this.parent1 = parent1 == null ? null : parent1.saveToJSON(new JsonObject());
 		update();
 	}
 
@@ -46,7 +46,7 @@ public class Incubator {
 	}
 
 	public void setParent2(Pokemon parent2) {
-		this.parent2 = parent2.saveToJSON(new JsonObject());
+		this.parent2 = parent2 == null ? null : parent2.saveToJSON(new JsonObject());
 		update();
 	}
 
@@ -59,7 +59,7 @@ public class Incubator {
 	}
 
 	public void setBaby(Pokemon baby) {
-		this.baby = baby.saveToJSON(new JsonObject());
+		this.baby = baby == null ? null : baby.saveToJSON(new JsonObject());
 		update();
 	}
 

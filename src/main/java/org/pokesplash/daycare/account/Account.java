@@ -48,7 +48,7 @@ public class Account {
 		}
 	}
 
-	public void updateIncubators() { // TODO run this method when cancelling an incubator
+	public void updateIncubators() {
 		int amount = DayCare.config.getIncubatorAmount();
 		if (incubators.size() < amount) {
 			int difference = amount - incubators.size();

@@ -35,7 +35,7 @@ public class MainMenu {
 			Item displayItem;
 
 			boolean isEggReady = incubator.getEndTime() < new Date().getTime();
-			if (incubator.getEndTime() == -1) {
+			if (incubator.getEndTime() == -1 || incubator.getBaby() == null) {
 				displayItem = CobblemonItems.DESTINY_KNOT;
 			} else if (!isEggReady) {
 				displayItem = Items.EGG;
@@ -47,7 +47,7 @@ public class MainMenu {
 			lore.add("§bParent 1: " + (incubator.getParent1() == null ? "None" :
 					incubator.getParent1().getDisplayName().getString()));
 			lore.add("§bParent 2: " + (incubator.getParent2() == null ? "None" :
-					incubator.getParent1().getDisplayName().getString()));
+					incubator.getParent2().getDisplayName().getString()));
 			lore.add("§dEgg Available: " + (isEggReady ? "Yes" : "No"));
 
 			if (!isEggReady && incubator.getEndTime() != -1) {

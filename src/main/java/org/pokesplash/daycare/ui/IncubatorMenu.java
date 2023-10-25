@@ -7,7 +7,9 @@ import ca.landonjw.gooeylibs2.api.button.GooeyButton;
 import ca.landonjw.gooeylibs2.api.page.GooeyPage;
 import ca.landonjw.gooeylibs2.api.page.Page;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
-import jdk.jshell.execution.Util;
+import com.cobblemon.mod.common.Cobblemon;
+import com.cobblemon.mod.common.CobblemonItems;
+import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import org.pokesplash.daycare.DayCare;
@@ -21,9 +23,19 @@ import java.util.Date;
 
 public class IncubatorMenu {
 	public Page getPage(Incubator incubator) {
-		Button parent1 = new PokemonButton().getButton(incubator.getParent1(), null); // TODO callback
+		Button parent1 = new PokemonButton().getButton(incubator.getParent1(), e -> {
+			if (!incubator.isInProgress()) {
+				UIManager.openUIForcefully(e.getPlayer(), new SelectMenu()
+						.getPage(incubator, 1, e.getPlayer()));
+			}
+		});
 
-		Button parent2 = new PokemonButton().getButton(incubator.getParent2(), null); // TODO callback
+		Button parent2 = new PokemonButton().getButton(incubator.getParent2(), e -> {
+			if (!incubator.isInProgress()) {
+				UIManager.openUIForcefully(e.getPlayer(), new SelectMenu()
+						.getPage(incubator, 2, e.getPlayer()));
+			}
+		});
 
 
 		Button baby = makeBabyButton(incubator);
@@ -32,7 +44,11 @@ public class IncubatorMenu {
 				.display(new ItemStack(Items.GREEN_STAINED_GLASS_PANE))
 				.title("§aConfirm")
 				.onClick(e -> {
-					// TODO all logic to create baby, lock in Pokemon, set incubator to in progress.
+					incubator.setInProgress(true);
+					incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2()));
+					incubator.setEndTime(new Date().getTime() +
+							((long) DayCare.config.getIncubationTime() * 60 * 1000));
+					UIManager.openUIForcefully(e.getPlayer(), new IncubatorMenu().getPage(incubator));
 				})
 				.build();
 
@@ -40,7 +56,11 @@ public class IncubatorMenu {
 				.display(new ItemStack(Items.RED_STAINED_GLASS_PANE))
 				.title("§cCancel")
 				.onClick(e -> {
-					// TODO cancel breeding, remove timer, cancel baby, return parents.
+					incubator.setInProgress(false);
+					if (incubator.getEndTime() > new Date().getTime()) {
+						incubator.setBaby(null);
+					}
+					UIManager.openUIForcefully(e.getPlayer(), new IncubatorMenu().getPage(incubator));
 				})
 				.build();
 
@@ -87,7 +107,7 @@ public class IncubatorMenu {
 	}
 
 	private Button makeBabyButton(Incubator incubator) {
-		if (incubator.getParent1() == null || incubator.getParent2() == null) {
+		if (incubator.getParent1() == null || incubator.getParent2() == null || incubator.getBaby() == null) {
 
 			return GooeyButton.builder()
 					.display(new ItemStack(Items.BARRIER))
@@ -105,8 +125,16 @@ public class IncubatorMenu {
 					.display(new ItemStack(Items.TURTLE_EGG))
 					.title("§bClick To Redeem Your Egg!")
 					.onClick(e -> {
-						DayCareUtils.removeBabyFromIncubator(incubator);
-						// TODO give person egg, create new Baby with timer.
+						PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(e.getPlayer());
+						party.add(incubator.getBaby());
+						if (incubator.isInProgress()) {
+							incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2()));
+							incubator.setEndTime(new Date().getTime() +
+									((long) DayCare.config.getIncubationTime() * 60 * 1000));
+						} else {
+							incubator.setBaby(null);
+							incubator.setEndTime(-1);
+						}
 					})
 					.build();
 		}

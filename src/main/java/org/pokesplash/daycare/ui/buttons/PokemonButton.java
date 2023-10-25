@@ -36,14 +36,9 @@ public class PokemonButton {
 		} else {
 			lore.add("§2Ability: §a" + Utils.capitaliseFirst(pokemon.getAbility().getName()));
 		}
-		lore.add("§2Level: §a" + pokemon.getLevel());
 		lore.add("§2Gender: §a" + Utils.capitaliseFirst(pokemon.getGender().toString()));
-		lore.add("§2Shiny: " + (pokemon.getShiny() ? "§eYes" : "§cNo"));
-		lore.add("§2Pokeball: §a" + Utils.capitaliseFirst(pokemon.getCaughtBall().getName().toString().split(":")[1]));
 		lore.add("§7Stats:");
-		lore.add("§dHP §8- §3IV: §a" +
-				pokemon.getIvs().get(Stats.HP) + " §cEV: §a" +
-				(pokemon.getEvs().get(Stats.HP) == null ? "0" : pokemon.getEvs().get(Stats.HP)));
+		lore.add("§dHP §8- §3IV: §a" + pokemon.getIvs().get(Stats.HP));
 		lore.add("§cAtk §8- §3IV: §a" + pokemon.getIvs().get(Stats.ATTACK));
 		lore.add("§6Def §8- §3IV: §a" + pokemon.getIvs().get(Stats.DEFENCE));
 		lore.add("§5SpAtk §8- §3IV: §a" + pokemon.getIvs().get(Stats.SPECIAL_ATTACK));
@@ -55,7 +50,7 @@ public class PokemonButton {
 		}
 
 		return GooeyButton.builder()
-				.display(new ItemStack(PokemonItem.from(pokemon).getItem()))
+				.display(PokemonItem.from(pokemon))
 				.title(pokemon.getShiny() ? "§e" + pokemon.getSpecies().getName() :
 						"§3" + pokemon.getSpecies().getName())
 				.lore(lore)
