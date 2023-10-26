@@ -2,6 +2,8 @@ package org.pokesplash.daycare.util;
 
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.CobblemonItems;
+import com.cobblemon.mod.common.api.abilities.Ability;
+import com.cobblemon.mod.common.api.abilities.AbilityTemplate;
 import com.cobblemon.mod.common.api.data.JsonDataRegistry;
 import com.cobblemon.mod.common.api.pokeball.PokeBalls;
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class DayCareUtils {
 	public static boolean isCompatible(Pokemon pokemon1, Pokemon pokemon2) throws IllegalPokemonException {
@@ -102,11 +105,11 @@ public abstract class DayCareUtils {
 				PokemonProperties.Companion.parse(getForm(parent1, parent2, baby), " ", "=");
 		properties.apply(baby);
 
-		// TODO Pokeball
+		// Sets Pokeball.
 		baby.setCaughtBall(getBall(parent1, parent2, baby));
 
-
-		// TODO Abilities
+		// Sets Ability.
+		baby.setAbility(getAbility(parent1, parent2, baby));
 
 		// TODO Nature
 
@@ -215,6 +218,41 @@ public abstract class DayCareUtils {
 		return Utils.getRandomValue(validBalls);
 	}
 
+	private static Ability getAbility(Pokemon parent1, Pokemon parent2, Pokemon baby) {
+		Pokemon mother = getMother(parent1, parent2);
+
+		int randomNumber = ThreadLocalRandom.current().nextInt(1, 11);
+
+		ArrayList<AbilityTemplate> regularAbilities = CobblemonUtils.getNormalAbilities(baby);
+		ArrayList<AbilityTemplate> motherAbilities = CobblemonUtils.getNormalAbilities(mother);
+
+		AbilityTemplate ha = CobblemonUtils.getHA(baby);
+
+		Ability newAbility = null;
+
+		if (CobblemonUtils.isHA(mother)) {
+			if (randomNumber < 7) {
+				newAbility = ha == null ? Utils.getRandomValue(regularAbilities).create(true) : ha.create(true);
+			} else {
+				newAbility = Utils.getRandomValue(regularAbilities).create(true);
+			}
+		} else {
+			// 80% change to give same ability.
+			if (randomNumber < 9) {
+				return regularAbilities.get(motherAbilities.indexOf(mother.getAbility().getTemplate())).create(true);
+			} else {
+				if (regularAbilities.size() > 1) {
+					regularAbilities.remove(motherAbilities.indexOf(mother.getAbility().getTemplate()));
+					newAbility = Utils.getRandomValue(regularAbilities).create(true);
+				} else {
+					newAbility = Utils.getRandomValue(regularAbilities).create(true);
+				}
+			}
+		}
+
+		return newAbility;
+	}
+
 	private static Species findLowestEvo(Species pokemon) {
 		if (pokemon.getPreEvolution() == null) {
 			return pokemon;
@@ -234,6 +272,20 @@ public abstract class DayCareUtils {
 			return "alolan";
 		} else {
 			return "normal";
+		}
+	}
+
+	private static Pokemon getMother(Pokemon parent1, Pokemon parent2) {
+		Species ditto = PokemonSpecies.INSTANCE.getByPokedexNumber(132, Cobblemon.MODID);
+
+		if (parent1.getSpecies().equals(ditto)) {
+			return parent2;
+		} else if (parent2.getSpecies().equals(ditto)) {
+			return parent1;
+		} else if (parent1.getGender().equals(Gender.FEMALE)) {
+			return parent1;
+		}  else {
+			return parent2;
 		}
 	}
 }
