@@ -2,9 +2,12 @@ package org.pokesplash.daycare.util;
 
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.CobblemonItems;
+import com.cobblemon.mod.common.api.data.JsonDataRegistry;
+import com.cobblemon.mod.common.api.pokeball.PokeBalls;
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.api.pokemon.egg.EggGroup;
+import com.cobblemon.mod.common.pokeball.PokeBall;
 import com.cobblemon.mod.common.pokemon.FormData;
 import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.Pokemon;
@@ -12,8 +15,10 @@ import com.cobblemon.mod.common.pokemon.Species;
 import com.google.gson.JsonObject;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.system.windows.POINT;
 import org.pokesplash.daycare.DayCare;
 
+import java.lang.reflect.Array;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -98,15 +103,16 @@ public abstract class DayCareUtils {
 		properties.apply(baby);
 
 		// TODO Pokeball
+		baby.setCaughtBall(getBall(parent1, parent2, baby));
 
-
-		// TODO Moves
 
 		// TODO Abilities
 
 		// TODO Nature
 
 		// TODO IVs
+
+		// TODO Moves
 
 
 		// TODO Shinies? Future?
@@ -183,6 +189,30 @@ public abstract class DayCareUtils {
 		}
 
 
+	}
+
+	private static PokeBall getBall(Pokemon parent1, Pokemon parent2, Pokemon baby) {
+		Species babyParent1 = findLowestEvo(parent1.getSpecies());
+		Species babyParent2 = findLowestEvo(parent2.getSpecies());
+
+		ArrayList<PokeBall> validBalls = new ArrayList<>();
+		if (babyParent1.equals(baby.getSpecies())) {
+			validBalls.add(parent1.getCaughtBall());
+		}
+
+		if (babyParent2.equals(baby.getSpecies())) {
+			validBalls.add(parent2.getCaughtBall());
+		}
+
+		for (PokeBall ball : validBalls) {
+			if (ball.equals(PokeBalls.INSTANCE.getMASTER_BALL()) ||
+					ball.equals(PokeBalls.INSTANCE.getCHERISH_BALL())) {
+				validBalls.remove(ball);
+				validBalls.add(PokeBalls.INSTANCE.getPOKE_BALL());
+			}
+		}
+
+		return Utils.getRandomValue(validBalls);
 	}
 
 	private static Species findLowestEvo(Species pokemon) {
