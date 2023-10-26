@@ -39,6 +39,7 @@ public class PokemonButton {
 		}
 		lore.add("§2Gender: §a" + Utils.capitaliseFirst(pokemon.getGender().toString()));
 		lore.add("§2Ball: §a" + Utils.capitaliseFirst(pokemon.getCaughtBall().getName().toString().split(":")[1]));
+		lore.add("§2Item: §a" + (pokemon.heldItem() == null ? "None" : pokemon.heldItem().getName().getString()));
 		lore.add("§7Stats:");
 		lore.add("§dHP §8- §3IV: §a" + pokemon.getIvs().get(Stats.HP));
 		lore.add("§cAtk §8- §3IV: §a" + pokemon.getIvs().get(Stats.ATTACK));

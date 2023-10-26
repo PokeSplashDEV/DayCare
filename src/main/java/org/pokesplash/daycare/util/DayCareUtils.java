@@ -10,10 +10,7 @@ import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.api.pokemon.egg.EggGroup;
 import com.cobblemon.mod.common.pokeball.PokeBall;
-import com.cobblemon.mod.common.pokemon.FormData;
-import com.cobblemon.mod.common.pokemon.Gender;
-import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.cobblemon.mod.common.pokemon.Species;
+import com.cobblemon.mod.common.pokemon.*;
 import com.google.gson.JsonObject;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -111,7 +108,12 @@ public abstract class DayCareUtils {
 		// Sets Ability.
 		baby.setAbility(getAbility(parent1, parent2, baby));
 
-		// TODO Nature
+		// Sets nature if estone being held, or don't change.
+		Nature newNature = getNature(parent1, parent2);
+		if (newNature != null) {
+			baby.setNature(newNature);
+		}
+
 
 		// TODO IVs
 
@@ -251,6 +253,17 @@ public abstract class DayCareUtils {
 		}
 
 		return newAbility;
+	}
+
+	private static Nature getNature(Pokemon parent1, Pokemon parent2) {
+
+		if (parent1.heldItem().getItem().equals(CobblemonItems.EVERSTONE)) {
+			return parent1.getNature();
+		} else if (parent2.heldItem().getItem().equals(CobblemonItems.EVERSTONE)) {
+			return parent2.getNature();
+		} else {
+			return null;
+		}
 	}
 
 	private static Species findLowestEvo(Species pokemon) {
