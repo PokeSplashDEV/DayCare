@@ -41,12 +41,18 @@ public class PokemonButton {
 		lore.add("§2Ball: §a" + Utils.capitaliseFirst(pokemon.getCaughtBall().getName().toString().split(":")[1]));
 		lore.add("§2Item: §a" + (pokemon.heldItem() == null ? "None" : pokemon.heldItem().getName().getString()));
 		lore.add("§7Stats:");
-		lore.add("§dHP §8- §3IV: §a" + pokemon.getIvs().get(Stats.HP));
-		lore.add("§cAtk §8- §3IV: §a" + pokemon.getIvs().get(Stats.ATTACK));
-		lore.add("§6Def §8- §3IV: §a" + pokemon.getIvs().get(Stats.DEFENCE));
-		lore.add("§5SpAtk §8- §3IV: §a" + pokemon.getIvs().get(Stats.SPECIAL_ATTACK));
-		lore.add("§eSpDef §8- §3IV: §a" + pokemon.getIvs().get(Stats.SPECIAL_DEFENCE));
-		lore.add("§3Spe §8- §3IV: §a" + pokemon.getIvs().get(Stats.SPEED));
+		lore.add("§dHP §8- §3IV: §a" + (pokemon.getIvs().get(Stats.HP) == null ? 0 :
+				pokemon.getIvs().get(Stats.HP)));
+		lore.add("§cAtk §8- §3IV: §a" + (pokemon.getIvs().get(Stats.ATTACK) == null ? 0 :
+				pokemon.getIvs().get(Stats.ATTACK)));
+		lore.add("§6Def §8- §3IV: §a" + (pokemon.getIvs().get(Stats.DEFENCE) == null ? 0 :
+				pokemon.getIvs().get(Stats.DEFENCE)));
+		lore.add("§5SpAtk §8- §3IV: §a" + (pokemon.getIvs().get(Stats.SPECIAL_ATTACK) == null ? 0 :
+				pokemon.getIvs().get(Stats.SPECIAL_ATTACK)));
+		lore.add("§eSpDef §8- §3IV: §a" + (pokemon.getIvs().get(Stats.SPECIAL_DEFENCE) == null ? 0 :
+				pokemon.getIvs().get(Stats.SPECIAL_DEFENCE)));
+		lore.add("§3Spe §8- §3IV: §a" + (pokemon.getIvs().get(Stats.SPEED) == null ? 0 :
+				pokemon.getIvs().get(Stats.SPEED)));
 		lore.add("§6Moves:");
 		for (Move move : pokemon.getMoveSet().getMoves()) {
 			lore.add("§f" + move.getName());
