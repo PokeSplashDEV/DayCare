@@ -442,4 +442,40 @@ public abstract class DayCareUtils {
 
 		return null;
 	}
+
+	public static Pokemon teachEggMoves(Pokemon receiver, Pokemon sender) {
+
+		if (receiver == null) {
+			return null;
+		}
+
+		if (sender == null) {
+			return receiver;
+		}
+
+		if (receiver.heldItem().getItem().equals(CobblemonItems.MIRROR_HERB)) {
+			ArrayList<MoveTemplate> eggMoves = new ArrayList<>(receiver.getSpecies().getMoves().getEggMoves());
+
+			ArrayList<Move> senderMoves = new ArrayList<>(sender.getMoveSet().getMoves());
+
+			ArrayList<Move> receiverMoves = new ArrayList<>(receiver.getMoveSet().getMoves());
+
+			for (Move move : senderMoves) {
+				if (eggMoves.contains(move.getTemplate())
+						&& receiverMoves.size() < 4
+						&& !receiverMoves.contains(move)
+				) {
+					receiverMoves.add(move);
+				}
+			}
+
+			for (int x=0; x < receiverMoves.size(); x++) {
+				receiver.getMoveSet().setMove(x, receiverMoves.get(x));
+			}
+
+			return receiver;
+		} else {
+			return receiver;
+		}
+	}
 }

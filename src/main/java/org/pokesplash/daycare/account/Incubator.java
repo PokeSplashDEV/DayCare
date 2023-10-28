@@ -1,8 +1,11 @@
 package org.pokesplash.daycare.account;
 
+import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.google.gson.JsonObject;
+import org.pokesplash.daycare.util.DayCareUtils;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Incubator {
@@ -33,7 +36,8 @@ public class Incubator {
 	}
 
 	public void setParent1(Pokemon parent1) {
-		this.parent1 = parent1 == null ? null : parent1.saveToJSON(new JsonObject());
+		Pokemon newParent = DayCareUtils.teachEggMoves(parent1, getParent2());
+		this.parent1 = newParent == null ? null : newParent.saveToJSON(new JsonObject());
 		update();
 	}
 
@@ -46,7 +50,8 @@ public class Incubator {
 	}
 
 	public void setParent2(Pokemon parent2) {
-		this.parent2 = parent2 == null ? null : parent2.saveToJSON(new JsonObject());
+		Pokemon newParent = DayCareUtils.teachEggMoves(parent2, getParent1());
+		this.parent2 = newParent == null ? null : newParent.saveToJSON(new JsonObject());
 		update();
 	}
 
