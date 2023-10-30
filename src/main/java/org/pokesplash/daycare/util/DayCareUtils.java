@@ -107,7 +107,12 @@ public abstract class DayCareUtils {
 		properties.apply(baby);
 
 		// Sets Pokeball.
-		baby.setCaughtBall(getBall(parent1, parent2, baby));
+		PokeBall ball = getBall(parent1, parent2, baby);
+		if (ball.equals(PokeBalls.INSTANCE.getMASTER_BALL()) ||
+				ball.equals(PokeBalls.INSTANCE.getCHERISH_BALL())) {
+			ball = PokeBalls.INSTANCE.getPOKE_BALL();
+		}
+		baby.setCaughtBall(ball);
 
 		// Sets Ability.
 		baby.setAbility(getAbility(parent1, parent2, baby));
@@ -212,13 +217,6 @@ public abstract class DayCareUtils {
 			validBalls.add(parent2.getCaughtBall());
 		}
 
-		for (PokeBall ball : validBalls) {
-			if (ball.equals(PokeBalls.INSTANCE.getMASTER_BALL()) ||
-					ball.equals(PokeBalls.INSTANCE.getCHERISH_BALL())) {
-				validBalls.remove(ball);
-				validBalls.add(PokeBalls.INSTANCE.getPOKE_BALL());
-			}
-		}
 
 		return Utils.getRandomValue(validBalls);
 	}
