@@ -101,14 +101,14 @@ public class SelectMenu {
 	private void changePokemon(Pokemon oldPokemon, Pokemon newPokemon, PlayerPartyStore party, Incubator incubator) {
 		if (newPokemon != null) {
 			party.remove(newPokemon);
-			DayCareEvents.REMOVE_POKEMON.trigger(
-					new RemovePokemonEvent(party.getPlayerUUID(), oldPokemon, incubator));
+			DayCareEvents.ADD_POKEMON.trigger(
+					new AddPokemonEvent(party.getPlayerUUID(), newPokemon, incubator));
 		}
 
 		if (oldPokemon != null) {
 			party.add(oldPokemon);
-			DayCareEvents.ADD_POKEMON.trigger(
-					new AddPokemonEvent(party.getPlayerUUID(), newPokemon, incubator));
+			DayCareEvents.REMOVE_POKEMON.trigger(
+					new RemovePokemonEvent(party.getPlayerUUID(), oldPokemon, incubator));
 		}
 	}
 }
