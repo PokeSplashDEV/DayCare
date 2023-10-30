@@ -47,7 +47,8 @@ public class IncubatorMenu {
 				.title("§aConfirm")
 				.onClick(e -> {
 					if (incubator.getBaby() == null) {
-						incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2()));
+						incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2(),
+								e.getPlayer().getUuid()));
 						incubator.setEndTime(new Date().getTime() +
 								((long) DayCare.config.getIncubationTime() * 60 * 1000));
 					}
@@ -146,7 +147,8 @@ public class IncubatorMenu {
 
 						party.add(incubator.getBaby());
 						if (incubator.isInProgress()) {
-							incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2()));
+							incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2(),
+									e.getPlayer().getUuid()));
 							incubator.setEndTime(new Date().getTime() +
 									((long) DayCare.config.getIncubationTime() * 60 * 1000));
 						} else {

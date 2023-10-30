@@ -95,7 +95,7 @@ public abstract class DayCareUtils {
 		}
 	}
 
-	public static Pokemon makeBaby(Pokemon parent1, Pokemon parent2) {
+	public static Pokemon makeBaby(Pokemon parent1, Pokemon parent2, UUID player) {
 		Pokemon baby = new Pokemon().initialize();
 
 		// Sets the species.
@@ -139,7 +139,7 @@ public abstract class DayCareUtils {
 		// TODO command to set shiny charm?
 
 		DayCareEvents.CREATE_EGG.trigger(
-				new CreateEggEvent(parent1.getOwnerUUID(), parent1, parent2, baby));
+				new CreateEggEvent(player, parent1, parent2, baby));
 
 		return baby;
 	}
