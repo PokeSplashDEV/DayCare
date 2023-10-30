@@ -13,6 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import org.pokesplash.daycare.DayCare;
 import org.pokesplash.daycare.account.Incubator;
+import org.pokesplash.daycare.event.DayCareEvents;
+import org.pokesplash.daycare.event.events.RetrieveEggEvent;
 import org.pokesplash.daycare.ui.buttons.PokemonButton;
 import org.pokesplash.daycare.util.DayCareUtils;
 import org.pokesplash.daycare.util.IllegalPokemonException;
@@ -137,6 +139,11 @@ public class IncubatorMenu {
 					.title("§bClick To Redeem Your Egg!")
 					.onClick(e -> {
 						PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(e.getPlayer());
+
+						DayCareEvents.RETRIEVE_EGG.trigger(
+								new RetrieveEggEvent(party.getPlayerUUID(), incubator, incubator.getBaby())
+						);
+
 						party.add(incubator.getBaby());
 						if (incubator.isInProgress()) {
 							incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2()));

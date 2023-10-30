@@ -21,6 +21,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.system.windows.POINT;
 import org.pokesplash.daycare.DayCare;
+import org.pokesplash.daycare.event.DayCareEvents;
+import org.pokesplash.daycare.event.events.CreateEggEvent;
 
 import java.lang.reflect.Array;
 import java.text.Normalizer;
@@ -131,6 +133,8 @@ public abstract class DayCareUtils {
 		// TODO Shinies? Future?
 		// TODO command to set shiny charm?
 
+		DayCareEvents.CREATE_EGG.trigger(
+				new CreateEggEvent(parent1.getOwnerUUID(), parent1, parent2, baby));
 
 		return baby;
 	}

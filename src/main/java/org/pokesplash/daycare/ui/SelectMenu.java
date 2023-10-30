@@ -18,6 +18,9 @@ import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.pokesplash.daycare.DayCare;
 import org.pokesplash.daycare.account.Incubator;
+import org.pokesplash.daycare.event.DayCareEvents;
+import org.pokesplash.daycare.event.events.AddPokemonEvent;
+import org.pokesplash.daycare.event.events.RemovePokemonEvent;
 import org.pokesplash.daycare.ui.buttons.PokemonButton;
 import org.pokesplash.daycare.util.Utils;
 
@@ -46,11 +49,11 @@ public class SelectMenu {
 				if (parentSlot == 1) {
 					Pokemon oldPokemon = incubator.getParent1();
 					incubator.setParent1(pokemon);
-					changePokemon(oldPokemon, pokemon, party);
+					changePokemon(oldPokemon, pokemon, party, incubator);
 				} else {
 					Pokemon oldPokemon = incubator.getParent2();
 					incubator.setParent2(pokemon);
-					changePokemon(oldPokemon, pokemon, party);
+					changePokemon(oldPokemon, pokemon, party, incubator);
 				}
 				UIManager.openUIForcefully(e.getPlayer(), new IncubatorMenu().getPage(incubator));
 			}));
@@ -64,11 +67,11 @@ public class SelectMenu {
 					if (parentSlot == 1) {
 						Pokemon oldPokemon = incubator.getParent1();
 						incubator.setParent1(null);
-						changePokemon(oldPokemon, null, party);
+						changePokemon(oldPokemon, null, party, incubator);
 					} else {
 						Pokemon oldPokemon = incubator.getParent2();
 						incubator.setParent2(null);
-						changePokemon(oldPokemon, null, party);
+						changePokemon(oldPokemon, null, party, incubator);
 					}
 					UIManager.openUIForcefully(e.getPlayer(), new IncubatorMenu().getPage(incubator));
 				})
@@ -95,13 +98,17 @@ public class SelectMenu {
 		return page;
 	}
 
-	private void changePokemon(Pokemon oldPokemon, Pokemon newPokemon, PlayerPartyStore party) {
+	private void changePokemon(Pokemon oldPokemon, Pokemon newPokemon, PlayerPartyStore party, Incubator incubator) {
 		if (newPokemon != null) {
 			party.remove(newPokemon);
+			DayCareEvents.REMOVE_POKEMON.trigger(
+					new RemovePokemonEvent(party.getPlayerUUID(), oldPokemon, incubator));
 		}
 
 		if (oldPokemon != null) {
 			party.add(oldPokemon);
+			DayCareEvents.ADD_POKEMON.trigger(
+					new AddPokemonEvent(party.getPlayerUUID(), newPokemon, incubator));
 		}
 	}
 }
