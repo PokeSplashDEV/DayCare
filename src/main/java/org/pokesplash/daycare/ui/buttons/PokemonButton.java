@@ -7,7 +7,6 @@ import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.cobblemon.mod.common.util.LocalizationUtilsKt;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.Style;
@@ -16,7 +15,6 @@ import net.minecraft.text.TextColor;
 import org.pokesplash.daycare.util.CobblemonUtils;
 import org.pokesplash.daycare.util.Utils;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Consumer;

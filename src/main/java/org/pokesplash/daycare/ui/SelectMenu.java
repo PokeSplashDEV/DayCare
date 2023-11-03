@@ -49,11 +49,11 @@ public class SelectMenu {
 				if (parentSlot == 1) {
 					Pokemon oldPokemon = incubator.getParent1();
 					incubator.setParent1(pokemon);
-					changePokemon(oldPokemon, pokemon, party, incubator);
+					changePokemon(oldPokemon, pokemon, party, incubator, e.getPlayer());
 				} else {
 					Pokemon oldPokemon = incubator.getParent2();
 					incubator.setParent2(pokemon);
-					changePokemon(oldPokemon, pokemon, party, incubator);
+					changePokemon(oldPokemon, pokemon, party, incubator, e.getPlayer());
 				}
 				UIManager.openUIForcefully(e.getPlayer(), new IncubatorMenu().getPage(incubator));
 			}));
@@ -67,11 +67,11 @@ public class SelectMenu {
 					if (parentSlot == 1) {
 						Pokemon oldPokemon = incubator.getParent1();
 						incubator.setParent1(null);
-						changePokemon(oldPokemon, null, party, incubator);
+						changePokemon(oldPokemon, null, party, incubator, e.getPlayer());
 					} else {
 						Pokemon oldPokemon = incubator.getParent2();
 						incubator.setParent2(null);
-						changePokemon(oldPokemon, null, party, incubator);
+						changePokemon(oldPokemon, null, party, incubator, e.getPlayer());
 					}
 					UIManager.openUIForcefully(e.getPlayer(), new IncubatorMenu().getPage(incubator));
 				})
@@ -98,17 +98,18 @@ public class SelectMenu {
 		return page;
 	}
 
-	private void changePokemon(Pokemon oldPokemon, Pokemon newPokemon, PlayerPartyStore party, Incubator incubator) {
+	private void changePokemon(Pokemon oldPokemon, Pokemon newPokemon, PlayerPartyStore party, Incubator incubator,
+	ServerPlayerEntity player) {
 		if (newPokemon != null) {
 			party.remove(newPokemon);
 			DayCareEvents.ADD_POKEMON.trigger(
-					new AddPokemonEvent(party.getPlayerUUID(), newPokemon, incubator));
+					new AddPokemonEvent(player, newPokemon, incubator));
 		}
 
 		if (oldPokemon != null) {
 			party.add(oldPokemon);
 			DayCareEvents.REMOVE_POKEMON.trigger(
-					new RemovePokemonEvent(party.getPlayerUUID(), oldPokemon, incubator));
+					new RemovePokemonEvent(player, oldPokemon, incubator));
 		}
 	}
 }

@@ -1,22 +1,21 @@
 package org.pokesplash.daycare.event.events;
 
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.pokesplash.daycare.account.Incubator;
 
-import java.util.UUID;
-
 public class RetrieveEggEvent {
-	private UUID player;
+	private ServerPlayerEntity player;
 	private Incubator incubator;
 	private Pokemon baby;
 
-	public RetrieveEggEvent(UUID player, Incubator incubator, Pokemon baby) {
+	public RetrieveEggEvent(ServerPlayerEntity player, Incubator incubator, Pokemon baby) {
 		this.player = player;
 		this.incubator = incubator;
 		this.baby = baby;
 	}
 
-	public UUID getPlayer() {
+	public ServerPlayerEntity getPlayer() {
 		return player;
 	}
 

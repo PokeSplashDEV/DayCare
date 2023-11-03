@@ -1,15 +1,11 @@
 package org.pokesplash.daycare.util;
 
 import com.cobblemon.mod.common.api.Priority;
-import com.cobblemon.mod.common.api.abilities.Abilities;
-import com.cobblemon.mod.common.api.abilities.Ability;
 import com.cobblemon.mod.common.api.abilities.AbilityTemplate;
 import com.cobblemon.mod.common.api.abilities.PotentialAbility;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public abstract class CobblemonUtils {
 	public static boolean isHA(Pokemon pokemon) {

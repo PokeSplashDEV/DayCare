@@ -4,10 +4,8 @@ import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.api.abilities.Ability;
 import com.cobblemon.mod.common.api.abilities.AbilityTemplate;
-import com.cobblemon.mod.common.api.data.JsonDataRegistry;
 import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.moves.MoveTemplate;
-import com.cobblemon.mod.common.api.moves.Moves;
 import com.cobblemon.mod.common.api.pokeball.PokeBalls;
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
@@ -15,18 +13,20 @@ import com.cobblemon.mod.common.api.pokemon.egg.EggGroup;
 import com.cobblemon.mod.common.api.pokemon.stats.Stat;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.pokeball.PokeBall;
-import com.cobblemon.mod.common.pokemon.*;
+import com.cobblemon.mod.common.pokemon.Gender;
+import com.cobblemon.mod.common.pokemon.Nature;
+import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.cobblemon.mod.common.pokemon.Species;
 import com.google.gson.JsonObject;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import org.lwjgl.system.windows.POINT;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.pokesplash.daycare.DayCare;
 import org.pokesplash.daycare.event.DayCareEvents;
 import org.pokesplash.daycare.event.events.CreateEggEvent;
 
-import java.lang.reflect.Array;
-import java.text.Normalizer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class DayCareUtils {
@@ -95,7 +95,7 @@ public abstract class DayCareUtils {
 		}
 	}
 
-	public static Pokemon makeBaby(Pokemon parent1, Pokemon parent2, UUID player) {
+	public static Pokemon makeBaby(Pokemon parent1, Pokemon parent2, ServerPlayerEntity player) {
 		Pokemon baby = new Pokemon().initialize();
 
 		// Sets the species.

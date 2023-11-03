@@ -48,7 +48,7 @@ public class IncubatorMenu {
 				.onClick(e -> {
 					if (incubator.getBaby() == null) {
 						incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2(),
-								e.getPlayer().getUuid()));
+								e.getPlayer()));
 						incubator.setEndTime(new Date().getTime() +
 								((long) DayCare.config.getIncubationTime() * 60 * 1000));
 					}
@@ -142,13 +142,13 @@ public class IncubatorMenu {
 						PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(e.getPlayer());
 
 						DayCareEvents.RETRIEVE_EGG.trigger(
-								new RetrieveEggEvent(party.getPlayerUUID(), incubator, incubator.getBaby())
+								new RetrieveEggEvent(e.getPlayer(), incubator, incubator.getBaby())
 						);
 
 						party.add(incubator.getBaby());
 						if (incubator.isInProgress()) {
 							incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2(),
-									e.getPlayer().getUuid()));
+									e.getPlayer()));
 							incubator.setEndTime(new Date().getTime() +
 									((long) DayCare.config.getIncubationTime() * 60 * 1000));
 						} else {

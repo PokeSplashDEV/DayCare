@@ -1,23 +1,22 @@
 package org.pokesplash.daycare.event.events;
 
 import com.cobblemon.mod.common.pokemon.Pokemon;
-
-import java.util.UUID;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 public class CreateEggEvent {
-	private UUID player;
+	private ServerPlayerEntity player;
 	private Pokemon parent1;
 	private Pokemon parent2;
 	private Pokemon baby;
 
-	public CreateEggEvent(UUID player, Pokemon parent1, Pokemon parent2, Pokemon baby) {
+	public CreateEggEvent(ServerPlayerEntity player, Pokemon parent1, Pokemon parent2, Pokemon baby) {
 		this.player = player;
 		this.parent1 = parent1;
 		this.parent2 = parent2;
 		this.baby = baby;
 	}
 
-	public UUID getPlayer() {
+	public ServerPlayerEntity getPlayer() {
 		return player;
 	}
 
