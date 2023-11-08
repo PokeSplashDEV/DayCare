@@ -299,14 +299,14 @@ public abstract class DayCareUtils {
 			for (int x=newStats.size(); x<5; x++) {
 				Stat stat = Utils.getRandomValue(baseStats);
 				Pokemon parent = Utils.getRandomValue(Arrays.asList(parent1, parent2));
-				newStats.put(stat, Integer.valueOf(parent.getIvs().get(stat)));
+				newStats.put(stat, parent.getIvs().get(stat) == null ? 1 : Integer.valueOf(parent.getIvs().get(stat)));
 				baseStats.remove(stat);
 			}
 		} else {
 			for (int x=newStats.size(); x<3; x++) {
 				Stat stat = Utils.getRandomValue(baseStats);
 				Pokemon parent = Utils.getRandomValue(Arrays.asList(parent1, parent2));
-				newStats.put(stat, Integer.valueOf(parent.getIvs().get(stat)));
+				newStats.put(stat, parent.getIvs().get(stat) == null ? 1 : Integer.valueOf(parent.getIvs().get(stat)));
 				baseStats.remove(stat);
 			}
 		}
