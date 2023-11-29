@@ -130,6 +130,7 @@ public abstract class DayCareUtils {
 		}
 
 		// Sets Moves
+		baby.getMoveSet().clear();
 		ArrayList<Move> moves = getMoves(parent1, parent2, baby);
 		for (int x=0; x < moves.size(); x++) {
 			baby.getMoveSet().setMove(x, moves.get(x));
@@ -378,6 +379,18 @@ public abstract class DayCareUtils {
 			}
 		}
 
+		// Level 1 Moves
+		if (newMoves.size() < 4) {
+			ArrayList<MoveTemplate> level1Moves =
+					new ArrayList<>(baby.getSpecies().getMoves().getLevelUpMovesUpTo(1));
+
+			for (MoveTemplate move : level1Moves) {
+				if (newMoves.size() >= 4) {
+					break;
+				}
+				newMoves.add(move.create());
+			}
+		}
 		return newMoves;
 	}
 
@@ -393,11 +406,14 @@ public abstract class DayCareUtils {
 		JsonObject data = pokemon.saveToJSON(new JsonObject());
 		boolean isAlolan = data.get("alolan") == null ? false : data.get("alolan").getAsBoolean();
 		boolean isGalarian = data.get("galarian") == null ? false : data.get("galarian").getAsBoolean();
+		boolean isPaldean = data.get("paldean") == null ? false : data.get("paldean").getAsBoolean();
 
 		if (isGalarian) {
 			return "galarian";
 		} else if (isAlolan) {
 			return "alolan";
+		} else if (isPaldean) {
+			return "paldean";
 		} else {
 			return "normal";
 		}
@@ -455,8 +471,10 @@ public abstract class DayCareUtils {
 			return receiver;
 		}
 
+		Species baby = findLowestEvo(receiver.getSpecies());
+
 		if (receiver.heldItem().getItem().equals(CobblemonItems.MIRROR_HERB)) {
-			ArrayList<MoveTemplate> eggMoves = new ArrayList<>(receiver.getSpecies().getMoves().getEggMoves());
+			ArrayList<MoveTemplate> eggMoves = new ArrayList<>(baby.getMoves().getEggMoves());
 
 			ArrayList<Move> senderMoves = new ArrayList<>(sender.getMoveSet().getMoves());
 

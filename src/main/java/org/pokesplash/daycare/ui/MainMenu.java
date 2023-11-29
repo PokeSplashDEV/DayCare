@@ -34,7 +34,10 @@ public class MainMenu {
 
 			Item displayItem;
 
-			boolean isEggReady = incubator.getEndTime() < new Date().getTime();
+			boolean isEggReady =
+					incubator.getEndTime() < new Date().getTime()
+							&& incubator.getEndTime() != -1
+							&& incubator.getBaby() != null;
 			if (incubator.getEndTime() == -1 || incubator.getBaby() == null) {
 				displayItem = CobblemonItems.DESTINY_KNOT;
 			} else if (!isEggReady) {

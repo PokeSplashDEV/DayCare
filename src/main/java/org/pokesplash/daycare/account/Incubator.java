@@ -34,8 +34,7 @@ public class Incubator {
 	}
 
 	public void setParent1(Pokemon parent1) {
-		Pokemon newParent = DayCareUtils.teachEggMoves(parent1, getParent2());
-		this.parent1 = newParent == null ? null : newParent.saveToJSON(new JsonObject());
+		this.parent1 = parent1 == null ? null : parent1.saveToJSON(new JsonObject());
 		update();
 	}
 
@@ -48,8 +47,7 @@ public class Incubator {
 	}
 
 	public void setParent2(Pokemon parent2) {
-		Pokemon newParent = DayCareUtils.teachEggMoves(parent2, getParent1());
-		this.parent2 = newParent == null ? null : newParent.saveToJSON(new JsonObject());
+		this.parent2 = parent2 == null ? null : parent2.saveToJSON(new JsonObject());
 		update();
 	}
 
@@ -92,6 +90,10 @@ public class Incubator {
 	}
 
 	private void update() {
+		Pokemon newParent1 = DayCareUtils.teachEggMoves(getParent1(), getParent2());
+		this.parent1 = newParent1 == null ? null : newParent1.saveToJSON(new JsonObject());
+		Pokemon newParent2 = DayCareUtils.teachEggMoves(getParent2(), getParent1());
+		this.parent2 = newParent2 == null ? null : newParent2.saveToJSON(new JsonObject());
 		AccountProvider.getAccount(owner).updateIncubator(this);
 	}
 }
