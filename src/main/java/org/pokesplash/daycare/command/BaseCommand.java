@@ -1,6 +1,8 @@
 package org.pokesplash.daycare.command;
 
 import ca.landonjw.gooeylibs2.api.UIManager;
+import com.cobblemon.mod.common.Cobblemon;
+import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -35,6 +37,16 @@ public class BaseCommand {
 	public int run(CommandContext<ServerCommandSource> context) {
 		if (!context.getSource().isExecutedByPlayer()) {
 			context.getSource().sendMessage(Text.literal("This command must be ran by a player."));
+		}
+
+		PokemonBattle battle =
+				Cobblemon.INSTANCE.getBattleRegistry().getBattleByParticipatingPlayer(context.getSource().getPlayer());
+
+		if (battle != null) {
+			context.getSource().sendMessage(Text.literal(
+					"§cYou can not use DayCare while in a battle."
+			));
+			return 1;
 		}
 
 		ServerPlayerEntity player = context.getSource().getPlayer();
