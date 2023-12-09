@@ -38,6 +38,7 @@ public abstract class DaycareSpecies {
 			return BreedingExceptions.getNidoran();
 		}
 
-		return DayCareUtils.getMother(parentOne, parentTwo).getSpecies();
+		return DayCareUtils.findLowestEvo(
+				DayCareUtils.getMother(parentOne, parentTwo).getForm()).getSpecies();
 	}
 }
