@@ -25,7 +25,9 @@ public abstract class DaycareSpecies {
 				return BreedingExceptions.getNidoran();
 			}
 			// Gets the non-ditto parent and returns their species.
-			return BreedingExceptions.getNonDitto(parentOne, parentTwo).getSpecies();
+			return DayCareUtils.findLowestEvo(
+					BreedingExceptions.getNonDitto(parentOne, parentTwo).getForm()).getSpecies();
+
 		}
 
 		if (isVolbeatIllumise) {
