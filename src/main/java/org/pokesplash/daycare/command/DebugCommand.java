@@ -9,7 +9,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import org.pokesplash.daycare.util.DayCareUtils;
+import org.pokesplash.daycare.util.daycare.DayCareUtils;
 import org.pokesplash.daycare.util.LuckPermsUtils;
 import org.pokesplash.daycare.util.Utils;
 

@@ -2,7 +2,8 @@ package org.pokesplash.daycare.account;
 
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.google.gson.JsonObject;
-import org.pokesplash.daycare.util.DayCareUtils;
+import org.pokesplash.daycare.util.daycare.DayCareUtils;
+import org.pokesplash.daycare.util.daycare.DaycareMoves;
 
 import java.util.UUID;
 
@@ -90,9 +91,9 @@ public class Incubator {
 	}
 
 	private void update() {
-		Pokemon newParent1 = DayCareUtils.teachEggMoves(getParent1(), getParent2());
+		Pokemon newParent1 = DaycareMoves.teachEggMoves(getParent1(), getParent2());
 		this.parent1 = newParent1 == null ? null : newParent1.saveToJSON(new JsonObject());
-		Pokemon newParent2 = DayCareUtils.teachEggMoves(getParent2(), getParent1());
+		Pokemon newParent2 = DaycareMoves.teachEggMoves(getParent2(), getParent1());
 		this.parent2 = newParent2 == null ? null : newParent2.saveToJSON(new JsonObject());
 		AccountProvider.getAccount(owner).updateIncubator(this);
 	}

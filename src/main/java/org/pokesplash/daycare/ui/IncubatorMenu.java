@@ -16,7 +16,7 @@ import org.pokesplash.daycare.account.Incubator;
 import org.pokesplash.daycare.event.DayCareEvents;
 import org.pokesplash.daycare.event.events.RetrieveEggEvent;
 import org.pokesplash.daycare.ui.buttons.PokemonButton;
-import org.pokesplash.daycare.util.DayCareUtils;
+import org.pokesplash.daycare.util.daycare.DayCareUtils;
 import org.pokesplash.daycare.util.IllegalPokemonException;
 import org.pokesplash.daycare.util.Utils;
 
