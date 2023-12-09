@@ -75,9 +75,9 @@ public abstract class BreedingExceptions {
 
 	public static Pokemon getNonDitto(Pokemon parent1, Pokemon parent2) {
 		if (parent1.getSpecies().equals(ditto)) {
-			return parent1;
-		} else {
 			return parent2;
+		} else {
+			return parent1;
 		}
 	}
 
