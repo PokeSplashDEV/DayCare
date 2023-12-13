@@ -16,9 +16,9 @@ import org.pokesplash.daycare.account.Incubator;
 import org.pokesplash.daycare.event.DayCareEvents;
 import org.pokesplash.daycare.event.events.RetrieveEggEvent;
 import org.pokesplash.daycare.ui.buttons.PokemonButton;
-import org.pokesplash.daycare.util.daycare.DayCareUtils;
 import org.pokesplash.daycare.util.IllegalPokemonException;
 import org.pokesplash.daycare.util.Utils;
+import org.pokesplash.daycare.util.daycare.DayCareUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,7 +48,7 @@ public class IncubatorMenu {
 				.onClick(e -> {
 					if (incubator.getBaby() == null) {
 						incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2(),
-								e.getPlayer()));
+								e.getPlayer(), false));
 						incubator.setEndTime(new Date().getTime() +
 								((long) DayCare.config.getIncubationTime() * 60 * 1000));
 					}
@@ -148,7 +148,7 @@ public class IncubatorMenu {
 						party.add(incubator.getBaby());
 						if (incubator.isInProgress()) {
 							incubator.setBaby(DayCareUtils.makeBaby(incubator.getParent1(), incubator.getParent2(),
-									e.getPlayer()));
+									e.getPlayer(), false));
 							incubator.setEndTime(new Date().getTime() +
 									((long) DayCare.config.getIncubationTime() * 60 * 1000));
 						} else {

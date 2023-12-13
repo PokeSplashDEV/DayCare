@@ -1,10 +1,7 @@
 package org.pokesplash.daycare.util.daycare;
 
 import com.cobblemon.mod.common.pokeball.PokeBall;
-import com.cobblemon.mod.common.pokemon.FormData;
-import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.cobblemon.mod.common.pokemon.Species;
 import org.pokesplash.daycare.util.Utils;
 
 import java.util.ArrayList;

@@ -2,7 +2,6 @@ package org.pokesplash.daycare.account;
 
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.google.gson.JsonObject;
-import org.pokesplash.daycare.util.daycare.DayCareUtils;
 import org.pokesplash.daycare.util.daycare.DaycareMoves;
 
 import java.util.UUID;

@@ -1,33 +1,22 @@
 package org.pokesplash.daycare.util.daycare;
 
 import com.cobblemon.mod.common.Cobblemon;
-import com.cobblemon.mod.common.CobblemonItems;
-import com.cobblemon.mod.common.api.abilities.Ability;
-import com.cobblemon.mod.common.api.abilities.AbilityTemplate;
 import com.cobblemon.mod.common.api.moves.Move;
-import com.cobblemon.mod.common.api.moves.MoveTemplate;
 import com.cobblemon.mod.common.api.pokeball.PokeBalls;
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.api.pokemon.egg.EggGroup;
 import com.cobblemon.mod.common.api.pokemon.stats.Stat;
-import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.pokeball.PokeBall;
 import com.cobblemon.mod.common.pokemon.*;
-import com.google.gson.JsonObject;
-import net.minecraft.item.Item;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.pokesplash.daycare.DayCare;
 import org.pokesplash.daycare.event.DayCareEvents;
 import org.pokesplash.daycare.event.events.CreateEggEvent;
-import org.pokesplash.daycare.util.CobblemonUtils;
 import org.pokesplash.daycare.util.IllegalPokemonException;
-import org.pokesplash.daycare.util.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class DayCareUtils {
 	public static boolean isCompatible(Pokemon pokemon1, Pokemon pokemon2) throws IllegalPokemonException {
@@ -95,7 +84,7 @@ public abstract class DayCareUtils {
 		}
 	}
 
-	public static Pokemon makeBaby(Pokemon parent1, Pokemon parent2, ServerPlayerEntity player) {
+	public static Pokemon makeBaby(Pokemon parent1, Pokemon parent2, ServerPlayerEntity player, boolean isDebug) {
 		Pokemon baby = new Pokemon().initialize();
 
 		// Sets the species.
@@ -105,6 +94,8 @@ public abstract class DayCareUtils {
 		PokemonProperties properties =
 				PokemonProperties.Companion.parse(DaycareForm.getForm(parent1, parent2, baby), " ", "=");
 		properties.apply(baby);
+
+		baby.setGender(DaycareGender.getGender(baby));
 
 		// Sets Pokeball.
 		PokeBall ball = DaycareBall.getBall(parent1, parent2, baby);
@@ -139,8 +130,10 @@ public abstract class DayCareUtils {
 		// TODO Shinies? Future?
 		// TODO command to set shiny charm?
 
-		DayCareEvents.CREATE_EGG.trigger(
-				new CreateEggEvent(player, parent1, parent2, baby));
+		if (!isDebug) {
+			DayCareEvents.CREATE_EGG.trigger(
+					new CreateEggEvent(player, parent1, parent2, baby));
+		}
 
 		return baby;
 	}

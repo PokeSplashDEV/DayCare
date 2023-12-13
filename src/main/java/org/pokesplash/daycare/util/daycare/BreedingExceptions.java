@@ -6,7 +6,6 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import org.pokesplash.daycare.util.Utils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public abstract class BreedingExceptions {
