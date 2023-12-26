@@ -12,6 +12,7 @@ import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
+import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -39,6 +40,16 @@ public class SelectMenu {
 				pokemonButtons.add(GooeyButton.builder()
 						.display(new ItemStack(CobblemonItems.POKE_BALL))
 						.title("§cNo Pokemon In Slot")
+						.lore(new ArrayList<>())
+						.hideFlags(FlagType.All)
+						.build());
+				continue;
+			}
+
+			if (pokemon.getPersistentData().getBoolean("unbreedable")) {
+				pokemonButtons.add(GooeyButton.builder()
+						.display(PokemonItem.from(pokemon))
+						.title("§cThis Pokemon Can Not Be Bred.")
 						.lore(new ArrayList<>())
 						.hideFlags(FlagType.All)
 						.build());
