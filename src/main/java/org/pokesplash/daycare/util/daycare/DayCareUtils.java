@@ -3,7 +3,6 @@ package org.pokesplash.daycare.util.daycare;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.pokeball.PokeBalls;
-import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.api.pokemon.egg.EggGroup;
 import com.cobblemon.mod.common.api.pokemon.stats.Stat;
@@ -87,13 +86,18 @@ public abstract class DayCareUtils {
 	public static Pokemon makeBaby(Pokemon parent1, Pokemon parent2, ServerPlayerEntity player, boolean isDebug) {
 		Pokemon baby = new Pokemon().initialize();
 
-		// Sets the species.
-		baby.setSpecies(DaycareSpecies.getSpecies(parent1, parent2));
+		// TODO remove deprecated classes and methods.
+//		// Sets the species.
+//		baby.setSpecies(DaycareSpecies.getSpecies(parent1, parent2));
+//
+//		// Sets form
+//		PokemonProperties properties =
+//				PokemonProperties.Companion.parse(DaycareForm.getForm(parent1, parent2, baby),
+//						" ", "=");
+//		properties.apply(baby);
 
-		// Sets form
-		PokemonProperties properties =
-				PokemonProperties.Companion.parse(DaycareForm.getForm(parent1, parent2, baby), " ", "=");
-		properties.apply(baby);
+		baby = Baby.getBaby(parent1, parent2);
+		baby.removeHeldItem();
 
 		baby.setGender(DaycareGender.getGender(baby));
 

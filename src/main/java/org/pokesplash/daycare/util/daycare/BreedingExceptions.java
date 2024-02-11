@@ -89,7 +89,7 @@ public abstract class BreedingExceptions {
 			return true;
 		}
 
-		return DayCareUtils.findLowestEvo(pokemon1.getForm()).equals(
-				DayCareUtils.findLowestEvo(pokemon2.getForm()));
+		return DayCareUtils.findLowestEvo(pokemon1.getForm()).getSpecies().equals(
+				DayCareUtils.findLowestEvo(pokemon2.getForm()).getSpecies());
 	}
 }

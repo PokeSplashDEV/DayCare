@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 
 public abstract class DaycareSpecies {
+	@Deprecated
 	public static Species getSpecies(Pokemon parentOne, Pokemon parentTwo) {
 
 		boolean isVolbeatIllumise =

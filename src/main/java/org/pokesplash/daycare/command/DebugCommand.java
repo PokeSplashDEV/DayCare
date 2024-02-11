@@ -232,18 +232,23 @@ public class DebugCommand {
 			context.getSource().sendMessage(Text.literal("This command must be executed by a player."));
 		}
 
-		ServerPlayerEntity player = context.getSource().getPlayer();
+		try {
+			ServerPlayerEntity player = context.getSource().getPlayer();
 
-		int slot1 = IntegerArgumentType.getInteger(context, "slot1") - 1;
-		int slot2 = IntegerArgumentType.getInteger(context, "slot2") - 1;
+			int slot1 = IntegerArgumentType.getInteger(context, "slot1") - 1;
+			int slot2 = IntegerArgumentType.getInteger(context, "slot2") - 1;
 
-		PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(player);
+			PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(player);
 
-		Pokemon pokemon = DayCareUtils.makeBaby(party.get(slot1), party.get(slot2), player, true);
+			Pokemon pokemon = DayCareUtils.makeBaby(party.get(slot1), party.get(slot2), player, true);
 
-		context.getSource().sendMessage(Text.literal("§2Ability: §a")
-				.append(Text.translatable(pokemon.getAbility().getDisplayName())
-						.setStyle(Style.EMPTY.withColor(TextColor.parse("green")))));
+			context.getSource().sendMessage(Text.literal("§2Ability: §a")
+					.append(Text.translatable(pokemon.getAbility().getDisplayName())
+							.setStyle(Style.EMPTY.withColor(TextColor.parse("green")))));
+		} catch (Exception e) {
+			e.printStackTrace();
+			context.getSource().sendMessage(Text.literal(e.getMessage()));
+		}
 
 		return 1;
 	}

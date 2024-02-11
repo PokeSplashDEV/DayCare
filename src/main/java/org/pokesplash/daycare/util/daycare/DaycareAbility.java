@@ -1,5 +1,6 @@
 package org.pokesplash.daycare.util.daycare;
 
+import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.abilities.Ability;
 import com.cobblemon.mod.common.api.abilities.AbilityTemplate;
 import com.cobblemon.mod.common.pokemon.Pokemon;

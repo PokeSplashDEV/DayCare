@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.item.Item;
 
 public abstract class DaycareForm {
+	@Deprecated
 	public static String getForm(Pokemon parent1, Pokemon parent2, Pokemon baby) {
 
 		Item parent1Item = parent1.heldItem().getItem();
@@ -25,6 +26,7 @@ public abstract class DaycareForm {
 		}
 	}
 
+	@Deprecated
 	private static String checkForm(Pokemon pokemon) {
 		JsonObject data = pokemon.saveToJSON(new JsonObject());
 		boolean isAlolan = data.get("alolan") == null ? false : data.get("alolan").getAsBoolean();

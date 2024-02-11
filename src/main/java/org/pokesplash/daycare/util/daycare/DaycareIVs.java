@@ -9,6 +9,7 @@ import org.pokesplash.daycare.util.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 public class DaycareIVs {
 	public static HashMap<Stat, Integer> getIVs(Pokemon parent1, Pokemon parent2) {
@@ -59,6 +60,12 @@ public class DaycareIVs {
 			if (newStats.get(stat) == null) {
 				newStats.put(stat, 1);
 			}
+		}
+
+		// Randomises the rest
+		for (Stat stat : baseStats) {
+			int random = new Random().nextInt(32);
+			newStats.put(stat, random);
 		}
 
 		return newStats;

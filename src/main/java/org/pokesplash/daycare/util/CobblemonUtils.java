@@ -3,6 +3,8 @@ package org.pokesplash.daycare.util;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.abilities.AbilityTemplate;
 import com.cobblemon.mod.common.api.abilities.PotentialAbility;
+import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
+import com.cobblemon.mod.common.api.pokemon.PokemonPropertyExtractor;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 
 import java.util.ArrayList;
