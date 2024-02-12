@@ -9,6 +9,9 @@ import com.cobblemon.mod.common.api.pokemon.stats.Stat;
 import com.cobblemon.mod.common.pokeball.PokeBall;
 import com.cobblemon.mod.common.pokemon.*;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.text.TextContent;
 import org.pokesplash.daycare.DayCare;
 import org.pokesplash.daycare.event.DayCareEvents;
 import org.pokesplash.daycare.event.events.CreateEggEvent;
@@ -98,6 +101,7 @@ public abstract class DayCareUtils {
 
 		baby = Baby.getBaby(parent1, parent2);
 		baby.removeHeldItem();
+		baby.setNickname(baby.getSpecies().getTranslatedName());
 
 		baby.setGender(DaycareGender.getGender(baby));
 
