@@ -102,6 +102,7 @@ public abstract class DayCareUtils {
 		baby = Baby.getBaby(parent1, parent2);
 		baby.removeHeldItem();
 		baby.setNickname(baby.getSpecies().getTranslatedName());
+		baby.setLevel(1);
 
 		baby.setGender(DaycareGender.getGender(baby));
 
@@ -118,9 +119,7 @@ public abstract class DayCareUtils {
 
 		// Sets nature if estone being held, or don't change.
 		Nature newNature = DaycareNature.getNature(parent1, parent2);
-		if (newNature != null) {
-			baby.setNature(newNature);
-		}
+		baby.setNature(newNature);
 
 		// Sets IVs
 		HashMap<Stat, Integer> stats = DaycareIVs.getIVs(parent1, parent2);

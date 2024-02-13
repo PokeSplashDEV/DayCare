@@ -64,6 +64,7 @@ public class IncubatorMenu {
 					incubator.setInProgress(false);
 					if (incubator.getEndTime() > new Date().getTime()) {
 						incubator.setBaby(null);
+						incubator.setEndTime(-1);
 					}
 					UIManager.openUIForcefully(e.getPlayer(), new IncubatorMenu().getPage(incubator));
 				})
